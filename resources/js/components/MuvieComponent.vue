@@ -1,25 +1,26 @@
 <template>
-    <form @submit.prevent="submitMuvie">
+    <form>
         <input type="text" v-model="title" placeholder="タイトル">
         <input type="text" v-model="director" placeholder="監督名">
+        <input type="number" v-model="score" placeholder="スコア" min="0.1" max="5.0" step="0.1">
         <button @click="addMuvie">追加</button>
+        
     </form>
 
-    <li v-for="muvie in muvies" :key="muvie.id">
-        {{ muvie.id }} / {{ muvie.title }} / {{ muvie.director }}
-        <button
-            :disabled="isPush"
-            @click="displayUpdate(muvie)"
-        >編集</button>
 
-        <button
-            :disabled="isPush" @click="deleteMuvie(muvie.id)"
-        >削除</button>
+    
+    <li v-for="muvie in muvies" :key="muvie.id">
+        {{ muvie.title }} / {{ muvie.director }} / {{ muvie.score ? muvie.score.score : 0 }}
+        
+        <button :disabled="isPush" @click="displayUpdate(muvie)">編集</button>
+
+        <button :disabled="isPush" @click="deleteMuvie(muvie.id)">削除</button>
     </li>
 
     <div v-if="updateForm">
         <input type="text" v-model="updateTitle" placeholder="タイトル">
         <input type="text" v-model="updateDirector" placeholder="監督名">
+        <input type="number" v-model="updateScore" placeholder="スコア" min="0.1" max="5.0" step="0.1">
         <button @click="updateMuvie()">変更</button>
         <button @click="updateCancel">キャンセル</button>
     </div>
@@ -38,7 +39,8 @@ export default {
             updateForm: false,
             updateId: '',
             updateTitle: '',
-            updateAuthor: ''
+            updateAuthor: '',
+            score: 0
         };
     },
 
@@ -54,11 +56,13 @@ export default {
         addMuvie() {
             axios.post('/api/muvies', {
                 title: this.title,
-                director: this.director
+                director: this.director,
+                score: this.score
             }).then(() => {
                 // リクエストが成功した後の処理
                 this.title = '';
                 this.director = '';
+                this.score = 0;
                 this.getMuvies();
             });
         },
@@ -70,11 +74,13 @@ export default {
             this.updateId = muvie.id;
             this.updateTitle = muvie.title;
             this.updateDirector = muvie.director;
+            this.updateScore = muvie.score.score
         },
         updateMuvie() {
             axios.put('/api/muvies/' + this.updateId, {
                 title: this.updateTitle,
-                director: this.updateDirector
+                director: this.updateDirector,
+                score: this.updateScore
             }).then(() => {
                 this.isPush = false;
                 this.updateForm = false;
