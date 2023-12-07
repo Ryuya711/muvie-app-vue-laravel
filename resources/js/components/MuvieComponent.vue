@@ -1,29 +1,45 @@
 <template>
-    <form>
-        <input type="text" v-model="title" placeholder="タイトル">
-        <input type="text" v-model="director" placeholder="監督名">
-        <input type="number" v-model="score" placeholder="スコア" min="0.1" max="5.0" step="0.1">
-        <button @click="addMuvie">追加</button>
-        
-    </form>
-
-
-    
-    <li v-for="muvie in muvies" :key="muvie.id">
-        {{ muvie.title }} / {{ muvie.director }} / {{ muvie.score ? muvie.score.score : 0 }}
-        
-        <button :disabled="isPush" @click="displayUpdate(muvie)">編集</button>
-
-        <button :disabled="isPush" @click="deleteMuvie(muvie.id)">削除</button>
-    </li>
-
-    <div v-if="updateForm">
-        <input type="text" v-model="updateTitle" placeholder="タイトル">
-        <input type="text" v-model="updateDirector" placeholder="監督名">
-        <input type="number" v-model="updateScore" placeholder="スコア" min="0.1" max="5.0" step="0.1">
-        <button @click="updateMuvie()">変更</button>
-        <button @click="updateCancel">キャンセル</button>
+    <div class="app-title">
+        <h1>映画記録アプリ</h1>
     </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>タイトル</th>
+                <th>監督名</th>
+                <th>スコア</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-if="updateForm">
+                <td><input type="text" v-model="updateTitle" placeholder="タイトル" class="form-control"></td>
+                <td><input type="text" v-model="updateDirector" placeholder="監督名" class="form-control"></td>
+                <td><input type="number" v-model="updateScore" placeholder="スコア" min="0.1" max="5.0" step="0.1" class="form-control"></td>
+                <td>
+                    <button @click="updateMuvie()" class="btn">変更</button>
+                    <button @click="updateCancel" class="btn">キャンセル</button>
+                </td>
+            </tr>
+
+            <tr v-else>
+                <td><input type="text" v-model="title" placeholder="タイトル" class="form-control"></td>
+                <td><input type="text" v-model="director" placeholder="監督名" class="form-control"></td>
+                <td><input type="number" v-model="score" placeholder="スコア" min="0.1" max="5.0" step="0.1" class="form-control"></td>
+                <td><button @click="addMuvie" class="btn">追加</button></td>
+            </tr>
+            <tr v-for="muvie in muvies" :key="muvie.id">
+                <td>{{ muvie.title }}</td>
+                <td>{{ muvie.director }}</td>
+                <td>{{ muvie.score ? muvie.score.score : 0 }}</td>
+                <td>
+                    <button :disabled="isPush" @click="displayUpdate(muvie)" class="btn">編集</button>
+                    <button :disabled="isPush" @click="deleteMuvie(muvie.id)" class="btn">削除</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </template>
 
 <script>
@@ -107,5 +123,72 @@ export default {
 
 
 <style scoped>
+    .app-title {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse; /* セルの境界線を重ねる */
+    }
+
+    th, td {
+        border: 1px solid #ddd; /* セルの境界線を設定 */
+        padding: 8px; /* セル内の余白 */
+    }
+
+    th {
+        background-color: #f2f2f2; /* ヘッダーの背景色 */
+        text-align: left; /* ヘッダーのテキストを左揃えに */
+    }
+
+    .app-title {
+    text-align: center;
+    margin: 20px 0;
+}
+
+    .form-container {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        background-color: #f8f9fa; /* 一覧画面の背景色に合わせる */
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: white; /* 入力フィールドの背景色 */
+        color: #495057; /* テキストの色 */
+    }
+
+    .btn {
+        padding: 10px;
+        border: none;
+        color:  #6c757d;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-block; /* インラインブロック要素として表示 */
+        width: auto; /* 幅を自動に設定 */
+        margin-right: 5px; /* ボタン間の余白 */
+    }
+
+    .btn:hover {
+        background-color: #5a6268;
+    }
+
+    table {
+        width: 80%; /* 表の横幅を80%に設定 */
+        margin: 0 auto; /* 左右のマージンを自動で設定し、中央に配置 */
+        border-collapse: collapse;
+    }
 
 </style>
