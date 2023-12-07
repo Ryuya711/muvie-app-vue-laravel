@@ -8,15 +8,15 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('muvie_scores', function (Blueprint $table) {
-            $table->unique('muvie_id'); // ユニーク制約の追加
+        Schema::table('movie_scores', function (Blueprint $table) {
+            $table->unique('movie_id'); // ユニーク制約の追加
         });
     }
 
     public function down()
     {
-        Schema::table('muvie_scores', function (Blueprint $table) {
-            $table->dropUnique('muvie_scores_muvie_id_unique'); // ユニーク制約の削除
+        Schema::table('movie_scores', function (Blueprint $table) {
+            $table->dropUnique('movie_scores_movie_id_unique'); // ユニーク制約の削除
         });
     }
 };

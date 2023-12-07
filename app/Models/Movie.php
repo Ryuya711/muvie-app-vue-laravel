@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Muvie extends Model
+class movie extends Model
 {
     use HasFactory;
 
@@ -16,7 +16,7 @@ class Muvie extends Model
 
     public function score()
     {
-        return $this->hasOne(MuvieScore::class);
+        return $this->hasOne(movieScore::class);
     }
 
 }

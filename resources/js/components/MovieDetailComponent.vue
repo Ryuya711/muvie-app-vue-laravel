@@ -6,7 +6,13 @@
 
 <script>
 export default {
-  // コンポーネントのオプションやデータ
+  data() {
+    director
+  }
+
+  mounted() {
+    const movieId = this.$route.params.id;
+  }
 };
 </script>
 

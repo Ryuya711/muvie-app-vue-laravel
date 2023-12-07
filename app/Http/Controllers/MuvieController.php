@@ -2,52 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Muvie; // 追加：Muvieモデルをインポート
-use App\Models\MuvieScore;
+use App\Models\movie; // 追加：movieモデルをインポート
+use App\Models\movieScore;
 use Illuminate\Http\Request;
 
-class MuvieController extends Controller
+class movieController extends Controller
 {
     public function index()
     {
-        // return Muvie::all();
+        // return movie::all();
         // 映画データとそれに関連するスコアデータを取得
-        return Muvie::with('score')->get();
+        return movie::with('score')->get();
     }
 
     public function store(Request $request)
     {
-        $muvie = Muvie::create($request->all());
+        $movie = movie::create($request->all());
 
         // スコアがリクエストに含まれている場合、スコアも保存する
         if ($request->has('score')) {
-            $muvie->score()->create([
+            $movie->score()->create([
                 'score' => $request->score
             ]);
         }
 
-        return $muvie;
+        return $movie;
     }
 
     public function show($id)
     {
-        $muvie = Muvie::findOrFail($id);
-        return response()->json($muvie);
+        $movie = movie::findOrFail($id);
+        return response()->json($movie);
     }
 
     public function update(Request $request, $id)
     {
         // 映画データの更新
-        Muvie::where('id', $id)->update([
+        movie::where('id', $id)->update([
             'title' => $request->title,
             'director' => $request->director
         ]);
 
         // 紐づくスコアデータの更新
         if ($request->has('score')) {
-            $muvie = Muvie::find($id);
-            if ($muvie) {
-                $score = $muvie->score()->firstOrCreate();
+            $movie = movie::find($id);
+            if ($movie) {
+                $score = $movie->score()->firstOrCreate();
                 $score->score = $request->score;
                 $score->save();
             }
@@ -57,6 +57,6 @@ class MuvieController extends Controller
 
     public function destroy($id)
     {
-        Muvie::where('id', $id)->delete();
+        movie::where('id', $id)->delete();
     }
 }

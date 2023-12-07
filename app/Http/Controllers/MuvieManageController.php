@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MuvieManageController extends Controller
+class movieManageController extends Controller
 {
     public function index() {
-        return view('muvie.index');
+        return view('movie.index');
     }    
 }

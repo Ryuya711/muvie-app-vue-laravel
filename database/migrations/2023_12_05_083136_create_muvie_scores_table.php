@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('muvie_scores', function (Blueprint $table) {
+        Schema::create('movie_scores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('muvie_id')->constrained()->onDelete('cascade');
+            $table->foreignId('movie_id')->constrained()->onDelete('cascade');
             $table->float('score');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('muvie_scores');
+        Schema::dropIfExists('movie_scores');
     }
 };

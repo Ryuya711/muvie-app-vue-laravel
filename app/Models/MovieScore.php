@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MuvieScore extends Model
+class movieScore extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'muvie_id', 
+        'movie_id', 
         'score'
     ];
 
-    public function muvie()
+    public function movie()
     {
-        return $this->belongsTo(Muvie::class);
+        return $this->belongsTo(movie::class);
     }
 
 }

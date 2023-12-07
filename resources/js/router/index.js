@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import MuvieComponent from '../components/MuvieComponent.vue';
-import MuvieDetailComponent from '../components/MuvieDetailComponent.vue'; // 作成する詳細コンポーネント
+import movieComponent from '../components/movieComponent.vue';
+import movieDetailComponent from '../components/movieDetailComponent.vue'; // 作成する詳細コンポーネント
 
 const routes = [
     {
         path: '/',
         name: 'Home',
-        component: MuvieComponent
+        component: movieComponent
     },
     {
-        path: '/muvie/:muvieId',
-        name: 'MuvieDetail',
-        component: MuvieDetailComponent,
+        path: '/movie/:movieId',
+        name: 'movieDetail',
+        component: movieDetailComponent,
         props: true
     } 
 ];

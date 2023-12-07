@@ -2,15 +2,15 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MuvieController;
-use App\Http\Controllers\MuvieScoreController;
+use App\Http\Controllers\movieController;
+use App\Http\Controllers\movieScoreController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('muvies', MuvieController::class);
+Route::apiResource('movies', movieController::class);
 
-Route::post('/muvies/{muvie}/scores', [MuvieScoreController::class, 'store']);
+Route::post('/movies/{movie}/scores', [movieScoreController::class, 'store']);
 
-Route::get('/muvies/{muvie}', [MuvieController::class, 'show']);
+// Route::get('/movies/{movie}', [movieController::class, 'show']);

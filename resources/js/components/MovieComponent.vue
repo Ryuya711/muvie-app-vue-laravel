@@ -6,7 +6,7 @@
     <table>
         <thead>
             <tr>
-                <th>タイトル</th>
+                <th>題名</th>
                 <th>監督名</th>
                 <th>スコア</th>
                 <th>操作</th>
@@ -14,11 +14,11 @@
         </thead>
         <tbody>
             <tr v-if="updateForm">
-                <td><input type="text" v-model="updateTitle" placeholder="タイトル" class="form-control"></td>
+                <td><input type="text" v-model="updateTitle" placeholder="題名" class="form-control"></td>
                 <td><input type="text" v-model="updateDirector" placeholder="監督名" class="form-control"></td>
                 <td><input type="number" v-model="updateScore" placeholder="スコア" min="0.1" max="5.0" step="0.1" class="form-control"></td>
                 <td>
-                    <button @click="updateMuvie()" class="btn">変更</button>
+                    <button @click="updatemovie()" class="btn">変更</button>
                     <button @click="updateCancel" class="btn">キャンセル</button>
                 </td>
             </tr>
@@ -27,23 +27,21 @@
                 <td><input type="text" v-model="title" placeholder="タイトル" class="form-control"></td>
                 <td><input type="text" v-model="director" placeholder="監督名" class="form-control"></td>
                 <td><input type="number" v-model="score" placeholder="スコア" min="0.1" max="5.0" step="0.1" class="form-control"></td>
-                <td><button @click="addMuvie" class="btn">追加</button></td>
+                <td><button @click="addmovie" class="btn">追加</button></td>
             </tr>
-            <tr v-for="muvie in muvies" :key="muvie.id">
-                <td>{{ muvie.title }}</td>
-                <td>{{ muvie.director }}</td>
-                <td>{{ muvie.score ? muvie.score.score : 0 }}</td>
+            <tr v-for="movie in movies" :key="movie.id">
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.director }}</td>
+                <td>{{ movie.score ? movie.score.score : 0 }}</td>
                 <td>
-                    <button :disabled="isPush" @click="displayUpdate(muvie)" class="btn">編集</button>
-                    <button :disabled="isPush" @click="deleteMuvie(muvie.id)" class="btn">削除</button>
-                    <router-link :to="`/muvie/${muvie.id}`" class="btn">詳細</router-link>
-                    <router-link v-bind:to="{ name: 'MuvieDetail', params: { muvieId: muvie.id}}">テスト</router-link>
+                    <button :disabled="isPush" @click="displayUpdate(movie)" class="btn">編集</button>
+                    <button :disabled="isPush" @click="deletemovie(movie.id)" class="btn">削除</button>
+                    <button class="btn"><router-link :to="`/movie/${movie.id}`" >詳細</router-link></button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <router-view></router-view>
 </template>
 
 <script>
@@ -52,7 +50,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            muvies: [],  // muviesを配列に変更
+            movies: [],  // moviesを配列に変更
             title: '',
             director: '',
             isPush: false,
@@ -66,15 +64,15 @@ export default {
 
     methods: {
         // 一覧表示処理_index
-        getMuvies() {
-            axios.get('/api/muvies').then(res => {
-                this.muvies = res.data;
+        getmovies() {
+            axios.get('/api/movies').then(res => {
+                this.movies = res.data;
             });
         },
 
         // 登録処理_new_create
-        addMuvie() {
-            axios.post('/api/muvies', {
+        addmovie() {
+            axios.post('/api/movies', {
                 title: this.title,
                 director: this.director,
                 score: this.score
@@ -83,28 +81,28 @@ export default {
                 this.title = '';
                 this.director = '';
                 this.score = 0;
-                this.getMuvies();
+                this.getmovies();
             });
         },
 
         // 更新処理
-        displayUpdate(muvie) {
+        displayUpdate(movie) {
             this.isPush = true;
             this.updateForm = true;
-            this.updateId = muvie.id;
-            this.updateTitle = muvie.title;
-            this.updateDirector = muvie.director;
-            this.updateScore = muvie.score.score
+            this.updateId = movie.id;
+            this.updateTitle = movie.title;
+            this.updateDirector = movie.director;
+            this.updateScore = movie.score.score
         },
-        updateMuvie() {
-            axios.put('/api/muvies/' + this.updateId, {
+        updatemovie() {
+            axios.put('/api/movies/' + this.updateId, {
                 title: this.updateTitle,
                 director: this.updateDirector,
                 score: this.updateScore
             }).then(() => {
                 this.isPush = false;
                 this.updateForm = false;
-                this.getMuvies();
+                this.getmovies();
             });     
         },
         updateCancel() {
@@ -112,15 +110,15 @@ export default {
             this.updateForm = false;
         },
 
-        deleteMuvie(id) {
-            axios.delete('/api/muvies/' + id).then(() => {
-                this.getMuvies();
+        deletemovie(id) {
+            axios.delete('/api/movies/' + id).then(() => {
+                this.getmovies();
             });
         },
     },
 
     mounted() {
-        this.getMuvies();  // コンポーネントがマウントされた時に一覧を読み込む
+        this.getmovies();  // コンポーネントがマウントされた時に一覧を読み込む
     }
 };
 </script>

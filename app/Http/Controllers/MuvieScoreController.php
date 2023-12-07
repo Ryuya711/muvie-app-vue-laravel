@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MuvieScore;
-use App\Models\Muvie;
+use App\Models\movieScore;
+use App\Models\movie;
 use Illuminate\Http\Request;
 
-class MuvieScoreController extends Controller
+class movieScoreController extends Controller
 {
-    public function store(Request $request, Muvie $muvie)
+    public function store(Request $request, movie $movie)
     {
-        $score = new MuvieScore();
-        $score->muvie_id = $muvie->id;
+        $score = new movieScore();
+        $score->movie_id = $movie->id;
         $score->score = $request->score;
         $score->save();
 

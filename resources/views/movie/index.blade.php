@@ -1,6 +1,6 @@
 <body>
     <div id="app">
-        <muvie-component></muvie-component>
+        <movie-component></movie-component>
     </div>
 
     <script src="{{ mix('js/app.js') }}"></script>

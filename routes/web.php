@@ -3,10 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('muvie.index');
+    return view('movie.index');
 });
 
-// すべてのリクエストをVueアプリケーションにリダイレクトする
+すべてのリクエストをVueアプリケーションにリダイレクトする
 Route::get('/{any}', function () {
-    return view('muvie.index');
+    return view('movie.index');
 })->where('any', '.*');
