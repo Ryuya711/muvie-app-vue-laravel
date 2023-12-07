@@ -31,7 +31,8 @@ class MuvieController extends Controller
 
     public function show($id)
     {
-
+        $movie = Movie::findOrFail($id);
+        return response()->json($movie);
     }
 
     public function update(Request $request, $id)

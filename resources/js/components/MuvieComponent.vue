@@ -36,6 +36,7 @@
                 <td>
                     <button :disabled="isPush" @click="displayUpdate(muvie)" class="btn">編集</button>
                     <button :disabled="isPush" @click="deleteMuvie(muvie.id)" class="btn">削除</button>
+                    <router-link :to="`/muvie/${muvie.id}`" class="btn">詳細</router-link>
                 </td>
             </tr>
         </tbody>
