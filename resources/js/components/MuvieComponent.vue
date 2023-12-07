@@ -37,10 +37,13 @@
                     <button :disabled="isPush" @click="displayUpdate(muvie)" class="btn">編集</button>
                     <button :disabled="isPush" @click="deleteMuvie(muvie.id)" class="btn">削除</button>
                     <router-link :to="`/muvie/${muvie.id}`" class="btn">詳細</router-link>
+                    <router-link v-bind:to="{ name: 'MuvieDetail', params: { muvieId: muvie.id}}">テスト</router-link>
                 </td>
             </tr>
         </tbody>
     </table>
+
+    <router-view></router-view>
 </template>
 
 <script>

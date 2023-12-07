@@ -9,7 +9,7 @@ const routes = [
         component: MuvieComponent
     },
     {
-        path: '/muvie/:id',
+        path: '/muvie/:muvieId',
         name: 'MuvieDetail',
         component: MuvieDetailComponent,
         props: true

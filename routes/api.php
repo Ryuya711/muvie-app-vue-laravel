@@ -13,4 +13,4 @@ Route::apiResource('muvies', MuvieController::class);
 
 Route::post('/muvies/{muvie}/scores', [MuvieScoreController::class, 'store']);
 
-Route::get('/movies/{id}', [MovieController::class, 'show']);
+Route::get('/muvies/{muvie}', [MuvieController::class, 'show']);
