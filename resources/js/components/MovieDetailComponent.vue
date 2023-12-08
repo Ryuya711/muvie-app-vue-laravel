@@ -5,6 +5,7 @@
             <h2>タイトル: {{ title }}</h2>
             <h2>監督: {{ director }}</h2>
             <h2>スコア: {{ score }}</h2>
+            <h2>レビュー: {{ review }}</h2>
             <button class="btn"><router-link :to="`/movies/${this.$route.params.movieId}/edit`" >編集</router-link></button>
             <button class="btn"><router-link :to="`/`" >一覧画面</router-link></button>
         </div>
@@ -19,7 +20,8 @@ export default {
         return {
             title: "",
             director: "",
-            score: 0
+            score: 0,
+            review: ""
         };
     },
     mounted() {
@@ -32,6 +34,7 @@ export default {
                 this.director = movieData.director;
                 this.title = movieData.title;
                 this.score = movieData.score ? movieData.score.score : '未評価';
+                this.review = movieData.movieReview ? movieData.movieReview.review : '未記入';
             }).catch(error => {
                 console.error(error);
             });

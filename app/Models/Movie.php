@@ -19,4 +19,9 @@ class movie extends Model
         return $this->hasOne(movieScore::class);
     }
 
+    public function review()
+    {
+        return $this->hasOne(movieReview::class);
+    }
+
 }

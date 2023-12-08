@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\movie; 
 use App\Models\movieScore;
+use App\Models\movieReview;
 use Illuminate\Http\Request;
 
 class movieController extends Controller
@@ -31,13 +32,13 @@ class movieController extends Controller
 
     public function show($id)
     {
-        $movie = movie::with('score')->findOrFail($id);
+        $movie = movie::with('score', 'review')->findOrFail($id);
         return response()->json($movie);
     }
 
     public function edit($id)
     {
-        $movie = movie::with('score')->findOrFail($id);
+        $movie = movie::with('score', 'review')->findOrFail($id);
         return response()->json($movie);
     }
 
@@ -59,6 +60,13 @@ class movieController extends Controller
             }
         }
         
+        // 紐づくレビューデータの更新
+        if ($request->has('review')) {
+            $movie = movie::find($id);
+            $movieReview = $movie->review()->firstOrCreate();
+            $movieReview->review = $request->review;
+            $movieReview->save();
+        }
     }
 
     public function destroy($id)

@@ -58,7 +58,8 @@ export default {
             updateId: '',
             updateTitle: '',
             updateAuthor: '',
-            score: 0
+            score: 0,
+            movie: ''
         };
     },
 
@@ -75,12 +76,14 @@ export default {
             axios.post('/api/movies', {
                 title: this.title,
                 director: this.director,
-                score: this.score
+                score: this.score,
+                review: this.review
             }).then(() => {
                 // リクエストが成功した後の処理
                 this.title = '';
                 this.director = '';
                 this.score = 0;
+                this.review = '';
                 this.getMovies();
             });
         },
@@ -92,7 +95,8 @@ export default {
             this.updateId = movie.id;
             this.updateTitle = movie.title;
             this.updateDirector = movie.director;
-            this.updateScore = movie.score.score
+            this.updateScore = movie.score.score;
+            this.updateRevuew = movie.movieReview.review;
         },
         updateMovie() {
             axios.put('/api/movies/' + this.updateId, {

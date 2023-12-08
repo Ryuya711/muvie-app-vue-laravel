@@ -14,6 +14,10 @@
                 <label for="score">スコア:</label>
                 <input type="number" id="score" v-model="score" class="form-control" min="0.1" max="5.0" step="0.1">
             </div>
+            <div class="form-group">
+                <label for="review">レビュー:</label>
+                <input type="text" id="review" v-model="review" class="form-control">
+            </div>
             <button @click="updateMovie" class="btn">更新</button>
         </div>
     </div>
@@ -27,7 +31,8 @@ export default {
         return {
             title: '',
             director: '',
-            score: 0
+            score: 0,
+            review: ""
         };
     },
     mounted() {
@@ -40,6 +45,7 @@ export default {
                 this.title = movieData.title;
                 this.director = movieData.director;
                 this.score = movieData.score ? movieData.score.score : 0;
+                this.review = movieData.movieReview ? movieData.movieReview.review : '未記入';
             }).catch(error => {
                 console.error(error);
             });
@@ -48,7 +54,8 @@ export default {
             axios.put(`/api/movies/${this.$route.params.movieId}`, {
                 title: this.title,
                 director: this.director,
-                score: this.score
+                score: this.score,
+                review: this.review
             }).then(() => {
                 this.$router.push(`/movies/${this.$route.params.movieId}`);
             }).catch(error => {

@@ -6,7 +6,7 @@ use App\Models\movieScore;
 use App\Models\movie;
 use Illuminate\Http\Request;
 
-class movieScoreController extends Controller
+class MovieScoreController extends Controller
 {
     public function store(Request $request, movie $movie)
     {
