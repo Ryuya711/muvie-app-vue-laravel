@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\movie; // 追加：movieモデルをインポート
+use App\Models\movie; 
 use App\Models\movieScore;
 use Illuminate\Http\Request;
 
@@ -30,6 +30,12 @@ class movieController extends Controller
     }
 
     public function show($id)
+    {
+        $movie = movie::with('score')->findOrFail($id);
+        return response()->json($movie);
+    }
+
+    public function edit($id)
     {
         $movie = movie::with('score')->findOrFail($id);
         return response()->json($movie);

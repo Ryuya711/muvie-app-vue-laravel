@@ -5,7 +5,8 @@
             <h2>タイトル: {{ title }}</h2>
             <h2>監督: {{ director }}</h2>
             <h2>スコア: {{ score }}</h2>
-            <!-- <button class="btn"><router-link :to="`/movies/${movie.id}/edit`" >編集</router-link></button> -->
+            <button class="btn"><router-link :to="`/movies/${this.$route.params.movieId}/edit`" >編集</router-link></button>
+            <button class="btn"><router-link :to="`/`" >一覧画面</router-link></button>
         </div>
     </div>
 </template>
@@ -18,13 +19,11 @@ export default {
         return {
             title: "",
             director: "",
-            score: ""
+            score: 0
         };
     },
     mounted() {
-        const movieId = this.$route.params.movieId;
-        console.log("Movie ID:", movieId);
-        this.fetchMovieData(movieId);
+        this.fetchMovieData(this.$route.params.movieId);
     },
     methods: {
         fetchMovieData(movieId) {
@@ -33,7 +32,6 @@ export default {
                 this.director = movieData.director;
                 this.title = movieData.title;
                 this.score = movieData.score ? movieData.score.score : '未評価';
-                console.log(movieData)
             }).catch(error => {
                 console.error(error);
             });

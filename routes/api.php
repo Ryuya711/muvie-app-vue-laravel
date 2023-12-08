@@ -13,4 +13,4 @@ Route::apiResource('movies', movieController::class);
 
 Route::post('/movies/{movie}/scores', [movieScoreController::class, 'store']);
 
-Route::get('/movies/{id}', [movieController::class, 'show']);
+// Route::get('/movies/{id}', [movieController::class, 'show']);
