@@ -6,7 +6,7 @@ Route::get('/', function () {
     return view('movie.index');
 });
 
-すべてのリクエストをVueアプリケーションにリダイレクトする
+// // すべてのリクエストをVueアプリケーションにリダイレクトする
 Route::get('/{any}', function () {
     return view('movie.index');
 })->where('any', '.*');

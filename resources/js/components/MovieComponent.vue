@@ -18,7 +18,7 @@
                 <td><input type="text" v-model="updateDirector" placeholder="監督名" class="form-control"></td>
                 <td><input type="number" v-model="updateScore" placeholder="スコア" min="0.1" max="5.0" step="0.1" class="form-control"></td>
                 <td>
-                    <button @click="updatemovie()" class="btn">変更</button>
+                    <button @click="updateMovie()" class="btn">変更</button>
                     <button @click="updateCancel" class="btn">キャンセル</button>
                 </td>
             </tr>
@@ -27,7 +27,7 @@
                 <td><input type="text" v-model="title" placeholder="タイトル" class="form-control"></td>
                 <td><input type="text" v-model="director" placeholder="監督名" class="form-control"></td>
                 <td><input type="number" v-model="score" placeholder="スコア" min="0.1" max="5.0" step="0.1" class="form-control"></td>
-                <td><button @click="addmovie" class="btn">追加</button></td>
+                <td><button @click="addMovie" class="btn">追加</button></td>
             </tr>
             <tr v-for="movie in movies" :key="movie.id">
                 <td>{{ movie.title }}</td>
@@ -35,8 +35,8 @@
                 <td>{{ movie.score ? movie.score.score : 0 }}</td>
                 <td>
                     <button :disabled="isPush" @click="displayUpdate(movie)" class="btn">編集</button>
-                    <button :disabled="isPush" @click="deletemovie(movie.id)" class="btn">削除</button>
-                    <button class="btn"><router-link :to="`/movie/${movie.id}`" >詳細</router-link></button>
+                    <button :disabled="isPush" @click="deleteMovie(movie.id)" class="btn">削除</button>
+                    <button class="btn"><router-link :to="`/movies/${movie.id}`" >詳細</router-link></button>
                 </td>
             </tr>
         </tbody>
@@ -64,14 +64,14 @@ export default {
 
     methods: {
         // 一覧表示処理_index
-        getmovies() {
+        getMovies() {
             axios.get('/api/movies').then(res => {
                 this.movies = res.data;
             });
         },
 
         // 登録処理_new_create
-        addmovie() {
+        addMovie() {
             axios.post('/api/movies', {
                 title: this.title,
                 director: this.director,
@@ -81,7 +81,7 @@ export default {
                 this.title = '';
                 this.director = '';
                 this.score = 0;
-                this.getmovies();
+                this.getMovies();
             });
         },
 
@@ -94,7 +94,7 @@ export default {
             this.updateDirector = movie.director;
             this.updateScore = movie.score.score
         },
-        updatemovie() {
+        updateMovie() {
             axios.put('/api/movies/' + this.updateId, {
                 title: this.updateTitle,
                 director: this.updateDirector,
@@ -102,7 +102,7 @@ export default {
             }).then(() => {
                 this.isPush = false;
                 this.updateForm = false;
-                this.getmovies();
+                this.getMovies();
             });     
         },
         updateCancel() {
@@ -110,15 +110,15 @@ export default {
             this.updateForm = false;
         },
 
-        deletemovie(id) {
+        deleteMovie(id) {
             axios.delete('/api/movies/' + id).then(() => {
-                this.getmovies();
+                this.getMovies();
             });
         },
     },
 
     mounted() {
-        this.getmovies();  // コンポーネントがマウントされた時に一覧を読み込む
+        this.getMovies();  // コンポーネントがマウントされた時に一覧を読み込む
     }
 };
 </script>

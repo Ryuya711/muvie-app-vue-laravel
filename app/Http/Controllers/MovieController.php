@@ -31,7 +31,7 @@ class movieController extends Controller
 
     public function show($id)
     {
-        $movie = movie::findOrFail($id);
+        $movie = movie::with('score')->findOrFail($id);
         return response()->json($movie);
     }
 
